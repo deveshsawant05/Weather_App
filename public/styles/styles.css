@@ -1,0 +1,95 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    background-image: url("/assets/images/background1.jpg");
+    background-size: 100vw 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Sora", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.text{
+    color: #FFFFFF;
+    font-family: 'Sora';
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+}
+.login-container {
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #FFFFFF;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    padding: 25px;
+}
+.logo-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 75px;
+}
+.title {
+    font-weight: 600;
+    font-size: 42px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.1em;
+
+    background: linear-gradient(90deg, #FF7F57 0%, #FFFFFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip:text;
+    margin: 0;
+}
+
+.powered{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.powered>p {
+    font-family: 'Sora';
+    font-style: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.logo {
+    width: 70px;
+}
+
+.button {
+    background: linear-gradient(90deg, #FFE08F 0%, #FF9D72 100%);
+    color: black;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    letter-spacing: 1px;
+    width: 100%;
+}
+.button-div{
+    margin: 0;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
