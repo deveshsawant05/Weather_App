@@ -18,19 +18,37 @@
 
 <body>
     <div class="login-container">
-        <div class="container logo-container">
+        <div class="logo-container">
             <p class="title">Weather App</p>
             <div class="powered">
                 <p>Powered by</p>
                 <img class="logo" src="assets/images/open_weather_logo.png" alt="Open Weather Logo">
             </div>
         </div>
-        <form class="button-div" method="get">
+        <form id="location_form" class="button-div" action="/confirmlocation" method="POST">
             <label for="submit" class="subtitle"><p class="text">Search Weather</p></label>
-            <input class="button text" type="submit" value="Use Your Current Location" formaction="/currentlocation">
-            <input class="button text" type="submit" value="Type a Location" formaction="/typelocation"  >
+            <input class="button input text" id="latitude" name="latitude" value="Latitude" hidden/>
+            <input class="button input text" id="longitude" name="longitude" value="Longitude" hidden/>
+            <input class="button text" type="button" name="hello" value="Use Your Current Location" onclick="getLocation()">
+        </form>
+        <form class="button-div" method="GET">
+            <input class="button text" type="submit" value="Type a Location" formaction="/searchlocation" method="GET">
         </form>
     </div>
+    <script>
+        async function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        async function showPosition(position) {
+            document.getElementById("latitude").setAttribute("value",position.coords.latitude);
+            document.getElementById("longitude").setAttribute("value",position.coords.longitude);
+            document.getElementById("location_form").submit();
+        }
+    </script>
 </body>
 
 
