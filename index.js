@@ -8,7 +8,7 @@ const port = 3000;
 app.use(bodyParser.urlencoded({extended:true}));
 
 // Api Key
-const API_KEY = (fs.readFileSync("apikey.txt")).toString();
+const API_KEY = (fs.readFileSync("./apikey.txt")).toString();
 
 app.use(express.static("public"));
 
@@ -43,6 +43,37 @@ app.post("/locations",async (req,res)=>{
     }
 })
 
+var city;
+var state;
+var country;
+
+async function getLocationName(latitude,longitude){
+    var name;
+    const result = await axios.get("http://api.openweathermap.org/geo/1.0/reverse",
+        {params:{
+            lat : latitude,
+            lon : longitude,
+            appid :API_KEY,
+            limit : 1
+        }});
+        const data = result.data[0];
+        if(data){
+            name = data.name;
+            city=name;
+            if(data.state){
+                name = name + ", " + data.state;
+                state=data.state;
+            }
+            name = name + ", " + data.country;
+            country = data.country;
+        }
+        else{
+            name = "Unnamed Location"
+            city = "Unnamed Location"
+        }
+    return name;
+}
+
 app.post("/confirmlocation",async (req,res)=>{
     const latitude = req.body.latitude;
     const longitude = req.body.longitude;
@@ -58,13 +89,17 @@ app.post("/confirmlocation",async (req,res)=>{
                 const data = result.data[0];
                 if(data){
                     name = data.name;
+                    city=name;
                     if(data.state){
                         name = name + ", " + data.state;
+                        state=data.state;
                     }
                     name = name + ", " + data.country;
+                    country = data.country;
                 }
                 else{
                     name = "Unnamed Location"
+                    city = "Unnamed Location"
                 }
             }
     res.render("confirmlocation.ejs",
@@ -87,6 +122,7 @@ app.post("/locationdata",async (req,res)=>{
         }});
     const latitude = result.data[0].lat;
     const longitude = result.data[0].lon;
+    getLocationName(latitude,longitude);
     res.render("confirmlocation.ejs",
         {
             location : location,
@@ -105,8 +141,17 @@ app.post("/weather",async (req,res)=>{
             lat : latitude,
             lon : longitude,
             appid :API_KEY,
+            units : "metric"
         }});
-    console.log(result.data);
+    const data = result.data;
+    res.render("weather.ejs",{
+        city : city,
+        state : state,
+        country : country,
+        latitude : latitude,
+        longitude : longitude,
+        data : data
+    })
 })
 
 
