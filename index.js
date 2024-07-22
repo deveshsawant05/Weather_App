@@ -3,12 +3,16 @@ import axios from "axios";
 import fs from 'fs';
 import bodyParser from "body-parser";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const app = express();
 const port = 3000;
+
 app.use(bodyParser.urlencoded({extended:true}));
 
 // Api Key
-const API_KEY = (fs.readFileSync("./apikey.txt")).toString();
+const API_KEY = (process.env.OPENWEATHER_API_KEY);
 
 app.use(express.static("public"));
 
@@ -113,6 +117,7 @@ app.post("/confirmlocation",async (req,res)=>{
 })
 
 app.post("/locationdata",async (req,res)=>{
+    city=state=country=null;
     const location = req.body.location;
     const result = await axios.get("http://api.openweathermap.org/geo/1.0/direct",
         {params:{
